@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"    
+"http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.studorm.mapper.AdminMapper">
+	<select id="findAdmin" parameterType="admin" resultType="admin">
+		select * from t_admin where userName=#{userName} and password=#{password}
+	</select>
+	<select id="findAdminPassword" parameterType="admin" resultType="Integer">
+		select adminId from t_admin where userName=#{userName} and password=#{password}
+	</select>
+	<update id="updateAdminPassword" parameterType="admin">
+		update t_admin set
+		password=#{password}
+		where adminId=#{adminId}
+	</update>
+</mapper>

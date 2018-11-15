@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"    
+"http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.studorm.mapper.DormManagerMapper">
+	<select id="findDormManager" parameterType="dormManager" resultType="dormManager">
+		select * from t_dormmanager where userName=#{userName} and password=#{password}
+	</select>
+	<select id="findDormManagerAll" parameterType="dormManager" resultType="java.util.Map">
+		select * from t_dormmanager where 1=1
+		<if test="name!=null and name!='' ">
+			and name like concat('%',#{name},'%')
+		</if>
+		limit #{fristPage},#{rows}
+	</select>
+	<select id="getDormManagerNum" parameterType="dormManager" resultMap="dormManagerNum">
+		select count(*) from t_dormmanager where 1=1
+		<if test="name!=null and name!='' ">
+			and name like concat('%',#{name},'%')
+		</if>
+	</select>
+	<resultMap type="page" id="dormManagerNum">
+		<result column="count(*)" property="num" />
+	</resultMap>
+	<insert id="addDormManager" parameterType="dormManager">
+		insert into t_dormmanager(userName,password,dormBuildId,name,sex,tel)
+		values(#{userName},#{password},#{dormBuildId},#{name},#{sex},#{tel})
+	</insert>
+	<delete id="deleteDormManager" parameterType="Integer">
+		delete from t_dormmanager where dormManId=#{id}
+	</delete>
+	<update id="updateDormManager" parameterType="dormManager">
+		update t_dormManager set
+		userName=#{userName},dormBuildId=#{dormBuildId},name=#{name},sex=#{sex},tel=#{tel}
+		where dormManId=#{dormManagerId}
+	</update>
+	<select id="findDormManagerPassword" parameterType="dormManager" resultType="Integer">
+		select dormManId from t_dormManager where userName=#{userName} and password=#{password}
+	</select>
+	<update id="updateDormManagerPassword" parameterType="dormManager">
+		update t_dormManager set
+		password=#{password}
+		where dormManId=#{dormManagerId}
+	</update>
+</mapper>

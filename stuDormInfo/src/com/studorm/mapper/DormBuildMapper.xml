@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"    
+"http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.studorm.mapper.DormBuildMapper">
+	<select id="findDormBuild" parameterType="dormBuild" resultType="dormBuild">
+		select * from t_dormbuild where dormBuildName='${dormBuildName}'
+	</select>
+	<select id="findDormBuildAll" parameterType="dormBuild" resultType="java.util.Map">
+		select * from t_dormbuild where 1=1
+		<if test="dormBuildName!=null and dormBuildName!='' ">
+			and dormBuildName like concat('%',#{dormBuildName},'%')
+		</if>
+	</select>
+	<insert id="addDormBuild" parameterType="dormBuild">
+		insert into t_dormbuild(dormBuildName,dormBuildDetail)
+		values(#{dormBuildName},#{dormBuildDetail})
+	</insert>
+	<delete id="deleteDormBuild" parameterType="Integer">
+		delete from t_dormbuild where dormBuildId=#{id}
+	</delete>
+	<update id="updateDormBuild" parameterType="DormBuild">
+		update t_dormbuild set
+		dormBuildName=#{dormBuildName},dormBuildDetail=#{dormBuildDetail}
+		where dormBuildId=#{dormBuildId}
+	</update>
+</mapper>

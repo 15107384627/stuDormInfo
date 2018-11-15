@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"    
+"http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.studorm.mapper.RecordMapper">
+	<select id="findRecord" parameterType="record" resultType="record">
+		select * from t_record where studentNumber=${studentNumber} and date=${date}
+	</select>
+	<select id="findRecordAll" parameterType="record" resultType="java.util.Map">
+		select * from t_record where 1=1
+		<if test="studentName!=null and studentName!='' ">
+			and studentName like concat('%',#{studentName},'%')
+		</if>
+	</select>
+	<insert id="addRecord" parameterType="record">
+		insert into t_record(studentNumber,studentName,dormBuildId,dormName,date,detail)
+		values(#{studentNumber},#{studentName},#{dormBuildId},#{dormName},#{date},#{detail})
+	</insert>
+	<delete id="deleteRecord" parameterType="Integer">
+		delete from t_record where recordId=#{id}
+	</delete>
+	<update id="updateRecord" parameterType="record">
+		update t_record set
+		studentNumber=#{studentNumber},studentName=#{studentName},dormBuildId=#{dormBuildId},dormName=#{dormName},date=#{date},detail=#{detail}
+		where recordId=#{recordId}
+	</update>
+</mapper>
